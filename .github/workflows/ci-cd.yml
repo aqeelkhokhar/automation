@@ -73,11 +73,25 @@ jobs:
       - name: Build iOS Release IPA
         run: |
           cd ios
-          xcodebuild -workspace Automation.xcworkspace -scheme Automation -sdk iphoneos -configuration Release archive -archivePath $PWD/build/Automation.xcarchive -allowProvisioningUpdates
+          xcodebuild -workspace Automation.xcworkspace \
+            -scheme Automation \
+            -sdk iphoneos \
+            -configuration Release \
+            archive \
+            -archivePath $PWD/build/Automation.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            -allowProvisioningUpdates
 
       - name: Export IPA
         run: |
-          xcodebuild -exportArchive -archivePath $PWD/build/Automation.xcarchive -exportOptionsPlist $PWD/exportOptions.plist -exportPath $PWD/build
+          cd ios
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/Automation.xcarchive \
+            -exportOptionsPlist $PWD/exportOptions.plist \
+            -exportPath $PWD/build \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
 
       - name: Upload iOS IPA as an artifact
         uses: actions/upload-artifact@v4
