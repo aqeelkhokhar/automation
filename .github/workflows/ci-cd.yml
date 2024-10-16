@@ -47,15 +47,13 @@ jobs:
             PROVISIONING_PROFILE_SPECIFIER="" \
             -allowProvisioningUpdates
 
-      - name: Export IPA
+      - name: Export Unsigned IPA
         run: |
           cd ios
           xcodebuild -exportArchive \
             -archivePath $PWD/build/Automation.xcarchive \
             -exportOptionsPlist $PWD/exportOptions.plist \
-            -exportPath $PWD/build \
-            CODE_SIGN_IDENTITY="" \
-            PROVISIONING_PROFILE_SPECIFIER=""
+            -exportPath $PWD/build
 
       - name: Upload iOS IPA as an artifact
         uses: actions/upload-artifact@v4
